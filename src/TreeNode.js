@@ -13,17 +13,21 @@ export default class TreeNode extends Component{
   render(){
     const entity = this.props.entity || {};
     return(
-      <div className="container">
-        <h4 onClick={() => this.nextPage(entity.path)}>
-          {entity.directory?
-            <FaFolder onClick={() => this.props.getContentsInAFolder(entity.path)}/> :
-            <FaFile/>}
-          {entity.name}
-        </h4>
-        {
-          entity.directory? null:
-          <a href={`http://localhost:8080/files?path=${entity.path}`}><FaDownload/></a>
-        }
+      <div className="">
+        <div className='row'>
+          <div className="" onClick={() => this.nextPage(entity.path)}>
+            {entity.directory?
+              <FaFolder onClick={() => this.props.getContentsInAFolder(entity.path)}/> :
+              <FaFile/>}
+            <span> {entity.name} </span>
+          </div>
+          <div className="">
+            {
+              entity.directory? null:
+              <a href={`http://localhost:8080/files?path=${entity.path}`}><FaDownload/></a>
+            }
+          </div>
+        </div>
       </div>
     );
   }

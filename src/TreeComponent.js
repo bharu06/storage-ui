@@ -37,17 +37,28 @@ class TreeComponent extends Component{
   }
 
   render(){
+    let path = this.getURLPathParam();
+    console.log(path);
     return(
       <div className="test">
-        {
-          this.state.data.map((entity, index) => (
-            <TreeNode
-              key={index}
-              entity={entity}
-              getContentsInAFolder={this.getContentsInAFolder}
-            />
-          ))
-        }
+        <div className="">
+          <form action={`http://localhost:8080/files?path=${path}`} method="post" enctype="multipart/form-data">
+            Select File to upload:
+            <input type="file" name="file" id="file"/>
+            <input type="submit" value="Upload Image" name="submit"/>
+          </form>
+        </div>
+        <div className="container">
+          {
+            this.state.data.map((entity, index) => (
+              <TreeNode
+                key={index}
+                entity={entity}
+                getContentsInAFolder={this.getContentsInAFolder}
+              />
+            ))
+          }
+          </div>
       </div>
     );
   }

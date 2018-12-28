@@ -15,13 +15,15 @@ export default class TreeNode extends Component{
     return(
       <div className="">
         <div className='row'>
-          <div className="" onClick={() => this.nextPage(entity.path)}>
+          <div className="">
             {entity.directory?
               <FaFolder onClick={() => this.props.getContentsInAFolder(entity.path)}/> :
               <FaFile/>}
 
           </div>
-          <div className="col-sm-4"><span className=""> {entity.name} </span></div>
+          <div className="col-sm-4" onClick={() => this.nextPage(entity.path)}>
+            <span className=""> {entity.name} </span>
+          </div>
           <div className="col-sm-6">
             {
               entity.directory? null:
@@ -29,6 +31,7 @@ export default class TreeNode extends Component{
             }
           </div>
         </div>
+        <hr/>
       </div>
     );
   }

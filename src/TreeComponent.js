@@ -6,7 +6,8 @@ class TreeComponent extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      data: []
+      data: [],
+      isLoading: true
     };
 
     this.getContentsInAFolder = this.getContentsInAFolder.bind(this);
@@ -27,7 +28,10 @@ class TreeComponent extends Component{
       .then(res => {
         console.log(res);
         const data = res.data;
-        this.setState({ data });
+        this.setState({
+          data,
+          isLoading: false
+        });
     });
   }
 
@@ -39,25 +43,34 @@ class TreeComponent extends Component{
   render(){
     let path = this.getURLPathParam();
     return(
-      <div className="test">
-        <div className="">
-          <form action={`http://localhost:8080/files?path=${path}`} method="post" enctype="multipart/form-data">
-            Select File to upload:
-            <input type="file" name="file" id="file"/>
-            <input className="btn btn-primary" type="submit" value="Upload Image" name="submit"/>
-          </form>
-        </div>
-        <div className="container">
-          {
-            this.state.data.map((entity, index) => (
-              <TreeNode
-                key={index}
-                entity={entity}
-                getContentsInAFolder={this.getContentsInAFolder}
-              />
-            ))
-          }
-        </div>
+      <div className="container">
+      <br/>
+      {
+        this.state.isLoading? (<div> Loading.....</div>):
+          (
+            <div>
+            <div className="">
+              <form action={`http://localhost:8080/files?path=${path}`} method="post" enctype="multipart/form-data">
+                Select File to upload:
+                <input type="file" name="file" id="file"/>
+                <input className="btn btn-primary" type="submit" value="Upload File" name="submit"/>
+              </form>
+            </div>
+            <br/>
+            <div className="">
+              {
+                this.state.data.map((entity, index) => (
+                  <TreeNode
+                    key={index}
+                    entity={entity}
+                    getContentsInAFolder={this.getContentsInAFolder}
+                  />
+                ))
+              }
+            </div>
+          </div>
+        )
+      }
       </div>
     );
   }

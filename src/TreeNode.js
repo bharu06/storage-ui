@@ -1,5 +1,5 @@
 import React, { Component} from "react";
-import { FaFolder, FaFolderOpen, FaFile, FaDownload } from 'react-icons/fa';
+import { FaFolder, FaFolderOpen, FaFile, FaDownload, FaSpinner } from 'react-icons/fa';
 
 export default class TreeNode extends Component{
   constructor(props) {
@@ -19,9 +19,10 @@ export default class TreeNode extends Component{
             {entity.directory?
               <FaFolder onClick={() => this.props.getContentsInAFolder(entity.path)}/> :
               <FaFile/>}
-            <span> {entity.name} </span>
+
           </div>
-          <div className="">
+          <div className="col-sm-4"><span className=""> {entity.name} </span></div>
+          <div className="col-sm-6">
             {
               entity.directory? null:
               <a href={`http://localhost:8080/files?path=${entity.path}`}><FaDownload/></a>
